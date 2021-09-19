@@ -7,9 +7,12 @@ namespace Assignment.Tests
     public class StudentTests
     {
         [Fact]
-        public void GetStatus_WhileCurrentDateIsLaterThanGraduationDate_ReturnsGraduated() {
+        public void GetStatus_WhileCurrentDateIsLaterThanGraduationDateAndEndIsLaterGraduation_ReturnsGraduated() {
             var student = new Student // Arrange
-                { GraduationDate = DateTime.Now.AddDays(-1) };
+            {
+                EndDate = DateTime.Now,
+                GraduationDate = DateTime.Now.AddDays(-1)
+            };
             var status = student.Status; // Act
             Assert.Equal(Status.Graduated, status); // Assert
         }
@@ -17,7 +20,10 @@ namespace Assignment.Tests
         [Fact]
         public void GetStatus_WhileCurrentDateIsLessOrEqualToTwoMonthsAfterStart_ReturnsNew() {
             var student = new Student // Arrange
-                { StartDate = DateTime.Now.AddDays(-1) };
+            {
+                StartDate = DateTime.Now.AddDays(-1),
+                EndDate = DateTime.Now.AddMonths(3)
+            };
             var status = student.Status; // Act
             Assert.Equal(Status.New, status); // Assert
         }
@@ -34,6 +40,7 @@ namespace Assignment.Tests
             var student = new Student // Arrange
             {
                 StartDate = DateTime.Now.AddMonths(-2).AddDays(-1),
+                EndDate = DateTime.Now.AddDays(2),
                 GraduationDate = DateTime.Now.AddDays(1)
             };
             var status = student.Status; // Act
@@ -41,7 +48,7 @@ namespace Assignment.Tests
         }
         
         [Fact]
-        public void GetStatus_WhileCurrentDateIsLaterThanEndAndEndIsEarlierThanGraduation_ReturnsDropout() {
+        public void GetStatus_WhileEndIsEarlierThanGraduation_ReturnsDropout() {
             var student = new Student // Arrange
             {
                 EndDate = DateTime.Now.AddDays(-2),
