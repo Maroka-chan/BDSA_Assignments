@@ -8,6 +8,13 @@ namespace Assignment4.Entities {
         public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) { } 
-    }
+        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Task>()
+                .Property(e => e.State)
+                .HasConversion(new EnumToStringConverter<State>());
+        }
+    } 
 }

@@ -16,10 +16,10 @@ namespace Assignment4.Entities {
         public string Description { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(10)")]
+        //[Column(TypeName = "nvarchar(10)")]
         public State State { get; set; }
 
-        public List<Tag> Tags { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 
     public enum State {

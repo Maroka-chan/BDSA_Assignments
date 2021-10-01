@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Assignment4.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,8 @@ namespace Assignment4 {
                 
                 return builder.Build();
             }
+            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlServer(connectionString);
+            using var context = new KanbanContext(optionsBuilder.Options);
         }
     }
 }
