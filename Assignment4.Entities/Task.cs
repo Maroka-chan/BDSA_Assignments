@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment4.Entities {
     public class Task {
@@ -15,6 +16,7 @@ namespace Assignment4.Entities {
         public string Description { get; set; }
 
         [Required]
+        [Column(TypeName = "nvarchar(10)")]
         public State State { get; set; }
 
         public List<Tag> Tags { get; set; }
