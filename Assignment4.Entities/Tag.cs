@@ -16,4 +16,5 @@ namespace Assignment4.Entities
 
         public ICollection<Task> Tasks { get; set; }
     }
+    
 }

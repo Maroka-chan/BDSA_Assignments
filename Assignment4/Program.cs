@@ -10,8 +10,10 @@ namespace Assignment4 {
             var configuration = LoadConfiguration();
             var connectionString = configuration.GetConnectionString("Kanban");
             
-            
-            
+            //using var connection = new SqlConnection(connectionString);
+            //connection.open();
+            //connection.close;??
+
             static IConfiguration LoadConfiguration() {
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
