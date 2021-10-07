@@ -9,7 +9,9 @@ namespace Assignment4 {
         static void Main(string[] args) {
             var configuration = LoadConfiguration();
             var connectionString = configuration.GetConnectionString("Kanban");
-
+            
+            
+            
             static IConfiguration LoadConfiguration() {
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
@@ -20,6 +22,7 @@ namespace Assignment4 {
             }
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlServer(connectionString);
             using var context = new KanbanContext(optionsBuilder.Options);
+            KanbanContextFactory.Seed(context);
         }
     }
 }
