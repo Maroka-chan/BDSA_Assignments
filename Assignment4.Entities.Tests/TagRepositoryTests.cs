@@ -12,7 +12,7 @@ namespace Assignment4.Entities.Tests
     public class TagRepositoryTests : IDisposable
     {
         private readonly KanbanContext _context;
-        private readonly Tag _tagRepo;//skal være vores tag repository
+        private readonly TagRepository _tagRepo;//skal være vores tag repository
 
         public TagRepositoryTests()
         {
@@ -56,13 +56,24 @@ namespace Assignment4.Entities.Tests
                 new Tag {Id = 10, Name = "tag10", Tasks = null}
             );
 
-            context.SaveChanges();
+             context.SaveChanges();
             _context = context;
-            _tagRepo = new Tag();//skal tage vores context som paramter, og være vores repo
-
+            _tagRepo = new TagRepository(_context);//skal tage vores context som paramter, og være vores repo
         }
         
-        //tests here
+        [Fact]
+        public void Create_Creates_New_Tag_With_Id()
+        {
+            var Tag = new Tag
+            {
+                Id = 11,
+                Name = "tag11",
+                Tasks = null
+            };
+            var createdTag = _tagRepo.Create(Tag);
+            Assert.Equal(Tag.Id,createdTag.Id);
+
+        }
 
         public void Dispose()
         {

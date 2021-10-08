@@ -2,9 +2,17 @@
 {
     public class TagRepository : ITagRepository
     {
-        public int Create(Tag tag)
+        private readonly KanbanContext _context;
+        public TagRepository(KanbanContext context)
         {
-            return 1;
+            _context = context;
+        }
+
+        public Tag Create(Tag tag)
+        {
+            _context.Tags.Add(tag);
+            _context.SaveChanges();
+            return tag;
         }
 
         public Tag read(int tagId)
@@ -22,7 +30,7 @@
 
         public void Dispose()
         {
-            
+            _context.Dispose();
         }
     }
 }
