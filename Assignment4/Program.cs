@@ -22,6 +22,7 @@ namespace Assignment4 {
                 
                 return builder.Build();
             }
+            
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlServer(connectionString);
             using var context = new KanbanContext(optionsBuilder.Options);
             KanbanContextFactory.Seed(context);
