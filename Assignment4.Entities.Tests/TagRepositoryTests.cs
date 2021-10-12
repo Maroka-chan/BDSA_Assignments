@@ -58,7 +58,7 @@ namespace Assignment4.Entities.Tests
 
              context.SaveChanges();
             _context = context;
-            _tagRepo = new TagRepository(_context);//skal tage vores context som paramter, og være vores repo
+            _tagRepo = new TagRepository(_context);
         }
         
         [Fact]
@@ -73,6 +73,43 @@ namespace Assignment4.Entities.Tests
             var createdTag = _tagRepo.Create(Tag);
             Assert.Equal(Tag.Id,createdTag.Id);
 
+        }
+
+        [Fact]
+        public void Read_From_DB_Return_Tag_By_Id()
+        {
+            var Tag = new Tag
+            {
+                Id = 11,
+                Name = "tag11",
+                Tasks = null
+            };
+            _tagRepo.Create(Tag);
+            Assert.Equal(Tag,_tagRepo.read(11));
+        }
+
+        [Fact]
+        public void Updates_Correct_Tag_And_Saves_Changes()
+        {   
+            
+            var Tag = new Tag
+            {
+                Id = 10,
+                Name = "tag11",
+                Tasks = null
+            };
+            
+            Assert.True(_tagRepo.read(10).Name=="tag10");
+            Assert.True(_tagRepo.Update(Tag));
+            Assert.True(_tagRepo.read(10).Name=="tag11");
+        }
+
+        [Fact]
+        public void Delete_Removes_Element_From_DB()
+        {
+            Assert.True(_tagRepo.read(10)!=null);
+            Assert.True(_tagRepo.delete(10));
+            Assert.True(_tagRepo.read(10)==null);
         }
 
         public void Dispose()
