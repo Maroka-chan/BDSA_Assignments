@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Assignment4.Core;
 
 namespace Assignment4.Entities
 {
@@ -11,58 +12,47 @@ namespace Assignment4.Entities
         {
             _context = context;
         }
-        
-        public Tag Create(Tag tag)
+
+        public TagDTO Read(int tagId)
         {
-            _context.Tags.Add(tag);
-            _context.SaveChanges();
-            return read(tag.Id); //kunne være fedt hvis vi kunne return read(tag.id) NOICE
+            var returnTag = _context.Tags.Find(tagId);
+            return new TagDTO(returnTag.Id, returnTag.Name);
         }
 
-        public Tag read(int tagId)
+        public Response Update(TagUpdateDTO tag)
         {
-            var returnTag= from tag in _context.Tags
-                                        where tag.Id == tagId
-                                        select tag;
+            var tagToUpdate = _context.Tags.Find(tag.Id);
+            if (tagToUpdate == null) return Response.NotFound;
             
-            return returnTag.FirstOrDefault();
-            
-        }
-
-        public bool Update(Tag tag)
-        {
-            Tag tagToUpdate = read(tag.Id);
-            if (tagToUpdate == null)
-            {
-                return false;
-            }
-
-            tagToUpdate.Id = tag.Id;
-            tagToUpdate.Name = tag.Name;
-            tagToUpdate.Tasks = tag.Tasks;
-
+            _context.Tags.Update(tagToUpdate);
             _context.SaveChanges();
             
-            return true;
+            return Response.Updated;
         }
 
-        public bool delete(int tagId)
+        public Response Delete(int tagId, bool force = false)
         {
-            Tag tagToRemove = read(tagId);
-            if (tagToRemove == null)
-            {
-                return false;
-            }
+            var tag = _context.Tags.Find(tagId);
+            if (tag.Tasks?.Any() == true && !force) return Response.Conflict;
             
-            _context.Tags.Remove(tagToRemove);
+            _context.Tags.Remove(tag);
             _context.SaveChanges();
-            
-            return true;
+            return Response.Deleted;
         }
 
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public (Response Response, int TagId) Create(TagCreateDTO tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<TagDTO> ReadAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

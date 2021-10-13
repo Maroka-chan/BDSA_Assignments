@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Assignment4.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Assignment4.Core;
 
 namespace Assignment4.Entities {
     public class Task {
@@ -20,13 +21,5 @@ namespace Assignment4.Entities {
         public State State { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
-    }
-
-    public enum State {
-        New,
-        Active,
-        Resolved,
-        Closed,
-        Removed
     }
 }
