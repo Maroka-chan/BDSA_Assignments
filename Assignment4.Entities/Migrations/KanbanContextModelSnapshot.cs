@@ -33,6 +33,9 @@ namespace Assignment4.Entities.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Tags");
                 });
 
