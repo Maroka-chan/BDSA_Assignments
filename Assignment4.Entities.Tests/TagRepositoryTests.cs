@@ -46,16 +46,16 @@ namespace Assignment4.Entities.Tests
 
 
             context.Tags.AddRange(
-     new Tag {Id = 1, Name = "tag1", Tasks = taskList1},
-                new Tag {Id = 2, Name = "tag2", Tasks = taskList2},
-                new Tag {Id = 3, Name = "tag3", Tasks = taskList3},
-                new Tag {Id = 4, Name = "tag4", Tasks = taskList4},
-                new Tag {Id = 5, Name = "tag5", Tasks = taskList5},
-                new Tag {Id = 6, Name = "tag6", Tasks = null},
-                new Tag {Id = 7, Name = "tag7", Tasks = null},
-                new Tag {Id = 8, Name = "tag8", Tasks = null},
-                new Tag {Id = 9, Name = "tag9", Tasks = null},
-                new Tag {Id = 10, Name = "tag10", Tasks = null}
+     new Tag { Name = "tag1", Tasks = taskList1},
+                new Tag { Name = "tag2", Tasks = taskList2},
+                new Tag { Name = "tag3", Tasks = taskList3},
+                new Tag { Name = "tag4", Tasks = taskList4},
+                new Tag { Name = "tag5", Tasks = taskList5},
+                new Tag { Name = "tag6", Tasks = null},
+                new Tag { Name = "tag7", Tasks = null},
+                new Tag { Name = "tag8", Tasks = null},
+                new Tag { Name = "tag9", Tasks = null},
+                new Tag { Name = "tag10", Tasks = null}
             );
 
              context.SaveChanges();
@@ -66,9 +66,37 @@ namespace Assignment4.Entities.Tests
         [Fact]
         public void Create_GivenTagWithName_ReturnsCorrectId()
         {
-            var tag = new TagCreateDTO { Name = "tag11" }; // Arrange
+            var tag = new TagCreateDTO {Name = "tag11"}; // Arrange
             var generatedId = _tagRepo.Create(tag).TagId; // Act
-            Assert.Equal(tag.Name,_tagRepo.Read(generatedId).Name); // Assert
+            Assert.Equal(tag.Name, _tagRepo.Read(generatedId).Name); // Assert
+
+        }
+
+        [Fact]
+        public void Read_From_DB_Return_Tag_By_Id()
+        {
+            var TagDTO = new TagCreateDTO{Name = "tag11"};
+            _tagRepo.Create(TagDTO);
+            Assert.Equal(TagDTO.Name, _tagRepo.Read(11).Name); //this assures that both the id and name is set correctly
+        }
+
+        [Fact]
+        public void Updates_Correct_Tag_And_Saves_Changes()
+        {
+
+            var Tag = new TagUpdateDTO{Name = "tagUPDATEDMAN", Id = 10};
+           
+            Assert.True(_tagRepo.Read(10).Name=="tag10");
+            Assert.True(_tagRepo.Update(Tag) == Response.Updated);
+            Assert.True(_tagRepo.Read(10).Name=="tagUPDATEDMAN");
+        }
+
+        [Fact]
+        public void Delete_Removes_Element_From_DB()
+        {
+            Assert.True(_tagRepo.Read(10)!=null);
+            Assert.True(_tagRepo.Delete(10, true) == Response.Deleted);
+            Assert.True(_tagRepo.Read(10) == null);
         }
 
         public void Dispose()

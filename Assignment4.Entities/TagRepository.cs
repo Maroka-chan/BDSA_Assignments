@@ -15,16 +15,21 @@ namespace Assignment4.Entities
 
         public TagDTO Read(int tagId)
         {
-            var returnTag = _context.Tags.Find(tagId);
-            return new TagDTO(returnTag.Id, returnTag.Name);
+            var returnTag = from tag in _context.Tags
+                where tag.Id == tagId
+                select new TagDTO(tag.Id, tag.Name);
+
+            return returnTag.FirstOrDefault();
         }
 
         public Response Update(TagUpdateDTO tag)
         {
             var tagToUpdate = _context.Tags.Find(tag.Id);
             if (tagToUpdate == null) return Response.NotFound;
+
+            tagToUpdate.Name = tag.Name;
+            tagToUpdate.Id = tag.Id;
             
-            _context.Tags.Update(tagToUpdate);
             _context.SaveChanges();
             
             return Response.Updated;
@@ -47,12 +52,16 @@ namespace Assignment4.Entities
 
         public (Response Response, int TagId) Create(TagCreateDTO tag)
         {
-            throw new NotImplementedException();
+            var newTag = new Tag{Name = tag.Name};
+            _context.Tags.Add(newTag);
+            _context.SaveChanges();
+            return (Response.Created, newTag.Id);
         }
 
         public IReadOnlyCollection<TagDTO> ReadAll()
         {
-            throw new NotImplementedException();
+            var tagDTOList =_context.Tags.Select(x => new TagDTO(x.Id,x.Name)).ToList().AsReadOnly();
+            return tagDTOList;
         }
     }
 }
