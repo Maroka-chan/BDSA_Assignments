@@ -32,8 +32,7 @@ namespace Assignment4.Entities.Tests
             var user5 = new User {Id = 5, Name = "Magrethe", Email = "Magrethe@hotmail.com"};
 
             var task1 = new Task {Id = 1, Title = "task1", AssignedTo = user1, State = State.New, Tags = null};
-            var task2 = new Task {Id = 2, Title = "task2", AssignedTo = user2, State = State
-                .Active, Tags = null};
+            var task2 = new Task {Id = 2, Title = "task2", AssignedTo = user2, State = State.Active, Tags = null};
             var task3 = new Task {Id = 3, Title = "task3", AssignedTo = user3, State = State.Closed, Tags = null};
             var task4 = new Task {Id = 4, Title = "task4", AssignedTo = user4, State = State.Removed, Tags = null};
             var task5 = new Task {Id = 5, Title = "task5", AssignedTo = user5, State = State.Resolved, Tags = null};

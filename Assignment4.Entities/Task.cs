@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,8 @@ namespace Assignment4.Entities {
         public User AssignedTo { get; set; }
 
         public string Description { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime StateUpdated { get; set; }
 
         [Required]
         //[Column(TypeName = "nvarchar(10)")]

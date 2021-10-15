@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Assignment4.Core
 {
-    public record TaskDTO(int Id, string Title, string AssignedToName, IReadOnlyCollection<string> Tags, State State);
+    public record TaskDTO(int Id, string Title, string Description, DateTime Created, int? AssignedToId, IReadOnlyCollection<string> Tags, State State, DateTime StateUpdated);
 
-    public record TaskDetailsDTO(int Id, string Title, string Description, DateTime Created, string AssignedToName, IReadOnlyCollection<string> Tags, State State, DateTime StateUpdated) : TaskDTO(Id, Title, AssignedToName, Tags, State);
+    public record TaskDetailsDTO(int Id, string Title, string Description, DateTime Created, int? AssignedToId, IReadOnlyCollection<string> Tags, State State, DateTime StateUpdated) : TaskDTO(Id, Title, Description, Created, AssignedToId, Tags, State, StateUpdated);
 
     public record TaskCreateDTO
     {
@@ -17,6 +17,8 @@ namespace Assignment4.Core
         public int? AssignedToId { get; init; }
 
         public string Description { get; init; }
+        public DateTime Created { get; init; }
+        public DateTime StateUpdated { get; init; }
 
         public ICollection<string> Tags { get; init; }
     }
