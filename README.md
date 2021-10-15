@@ -1,5 +1,7 @@
 # Assignment #4
 
+[![build and test](https://github.com/Maroka-chan/BDSA_Assignments/actions/workflows/build-and-test.yml/badge.svg?branch=Ass_04)](https://github.com/Maroka-chan/BDSA_Assignments/actions/workflows/build-and-test.yml)
+
 ## C&#35;
 
 Clone this repository and bring the code pieces you need into your BDSA Assignments GitHub repository.
